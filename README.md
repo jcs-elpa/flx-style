@@ -2,6 +2,8 @@
 
 # flx-style
 
+[![CI](https://github.com/jcs-elpa/flx-style/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/flx-style/actions/workflows/test.yml)
+
 Completion style for flx
 
 ## Usage
