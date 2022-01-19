@@ -1,10 +1,9 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # flx-style
+> Completion style for flx
 
 [![CI](https://github.com/jcs-elpa/flx-style/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/flx-style/actions/workflows/test.yml)
-
-Completion style for flx
 
 ## Usage
 
