@@ -98,11 +98,9 @@
     (dolist (str strs)
       (dolist (hole (flx-style-find-holes common str))
         (cl-incf (elt holes hole))))
-
     (cons common (append holes nil))))
 
-(defun flx-style-completion (string table predicate point
-                                    &optional all-p)
+(defun flx-style-completion (string table predicate point &optional all-p)
   "Helper function implementing a fuzzy completion-style"
   (let* ((beforepoint (substring string 0 point))
          (afterpoint (substring string point))
