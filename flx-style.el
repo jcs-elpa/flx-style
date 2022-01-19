@@ -158,10 +158,12 @@
              (+ (length prefix)
                 (cl-position (apply #'max holes) holes)))))))))
 
+;;;###autoload
 (defun flx-style-try-completion (string table predicate point)
   "Fuzzy version of completion-try-completion"
   (flx-style-completion string table predicate point))
 
+;;;###autoload
 (defun flx-style-all-completions (string table predicate point)
   "Fuzzy version of completion-all-completions"
   (flx-style-completion string table predicate point 'all))
