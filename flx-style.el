@@ -36,7 +36,7 @@
 (require 'flx)
 
 (defvar flx-style-cache nil
-  "Stores company-mode's flx-cache.")
+  "Stores flx-cache.")
 
 (defun flx-style-commonality (strs)
   "Return the largest string that fuzzy matches all STRS."
