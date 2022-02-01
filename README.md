@@ -6,7 +6,7 @@
 
 [![CI](https://github.com/jcs-elpa/flx-style/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/flx-style/actions/workflows/test.yml)
 
-## Usage
+## 🔨 Usage
 
 ```el
 (setq completion-styles '(flx))
