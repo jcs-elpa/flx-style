@@ -14,6 +14,9 @@ The implementation is simply extracted from [company-flx](https://github.com/Pyt
 (setq completion-styles '(flx))
 ```
 
+Notice this will only eliminate the completion candidates! You will need to config
+sorting function in order to get the sorting order respect to `flx` scoring algorithm.
+
 ## Contribute
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
