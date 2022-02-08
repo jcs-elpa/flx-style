@@ -6,6 +6,8 @@
 
 [![CI](https://github.com/jcs-elpa/flx-style/actions/workflows/test.yml/badge.svg)](https://github.com/jcs-elpa/flx-style/actions/workflows/test.yml)
 
+The implementation is simply extracted from [company-flx](https://github.com/PythonNut/company-flx).
+
 ## 🔨 Usage
 
 ```el
