@@ -69,7 +69,7 @@
                                        (if (> (length a) (length b)) a b))
                                      res)
                                   nil))
-                      (puthash strs (or rest 'nothing) commonality-cache)
+                      (puthash strs (or res 'nothing) commonality-cache)
                       res))))))
     (concat (fuzzy-commonality strs))))
 
