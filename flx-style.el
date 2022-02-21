@@ -50,9 +50,7 @@
           (unless (memq char tried)
             (catch 'notfound
               (setq idx (mapcar (lambda (str)
-                                  (or
-                                   (cl-position char str)
-                                   (throw 'notfound nil)))
+                                  (or (cl-position char str) (throw 'notfound nil)))
                                 strs))
               (push (cons char
                           (flx-style--commonality-hash
