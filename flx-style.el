@@ -92,19 +92,19 @@
         (cl-incf (elt holes hole))))
     (cons common (append holes nil))))
 
-(defun flx-style-completion (string table predicate point &optional all-p)
+(defun flx-style-completion (string table pred point &optional all-p)
   "Helper function implementing a fuzzy completion-style"
   (let* ((beforepoint (substring string 0 point))
          (afterpoint (substring string point))
-         (boundaries (completion-boundaries beforepoint table predicate afterpoint))
-         (prefix (substring beforepoint 0 (car boundaries)))
+         (bounds (completion-boundaries beforepoint table pred afterpoint))
+         (prefix (substring beforepoint 0 (car bounds)))
          (infix (concat
-                 (substring beforepoint (car boundaries))
-                 (substring afterpoint 0 (cdr boundaries))))
-         (suffix (substring afterpoint (cdr boundaries)))
+                 (substring beforepoint (car bounds))
+                 (substring afterpoint 0 (cdr bounds))))
+         (suffix (substring afterpoint (cdr bounds)))
          ;; |-              string                  -|
          ;;              point^
-         ;;            |-  boundaries -|
+         ;;            |-  bounds -|
          ;; |- prefix -|-    infix    -|-  suffix   -|
          ;;
          ;; Infix is the part supposed to be completed by table, AFAIKT.
@@ -116,47 +116,47 @@
                           infix
                           "")))
          (completion-regexp-list (cons regexp completion-regexp-list))
-         (candidates (or (all-completions prefix table predicate)
-                         (all-completions infix table predicate))))
-
+         (all (or (all-completions prefix table pred)
+                  ;;(all-completions infix table pred)  ; TODO: Do we need this?
+                  )))
     (if all-p
         ;; Implement completion-all-completions interface
-        (when candidates
+        (when all
           ;; Not doing this may result in an error.
-          (setcdr (last candidates) (length prefix))
-          candidates)
+          (setcdr (last all) (length prefix))
+          all)
       ;; Implement completion-try-completions interface
-      (if (= (length candidates) 1)
-          (if (equal infix (car candidates))
+      (if (= (length all) 1)
+          (if (equal infix (car all))
               t
             ;; Avoid quirk of double / for filename completion. I don't
             ;; know how this is *supposed* to be handled.
-            (when (and (> (length (car candidates)) 0)
+            (when (and (> (length (car all)) 0)
                        (> (length suffix) 0)
-                       (char-equal (aref (car candidates)
-                                         (1- (length (car candidates))))
+                       (char-equal (aref (car all)
+                                         (1- (length (car all))))
                                    (aref suffix 0)))
               (setq suffix (substring suffix 1)))
-            (cons (concat prefix (car candidates) suffix)
-                  (length (concat prefix (car candidates)))))
+            (cons (concat prefix (car all) suffix)
+                  (length (concat prefix (car all)))))
         (if (= (length infix) 0)
             (cons string point)
           (cl-destructuring-bind (merged . holes)
-              (flx-style-merge candidates)
+              (flx-style-merge all)
             (cons
              (concat prefix merged suffix)
              (+ (length prefix)
                 (cl-position (apply #'max holes) holes)))))))))
 
 ;;;###autoload
-(defun flx-style-try-completion (string table predicate point)
+(defun flx-style-try-completion (string table pred point)
   "Fuzzy version of completion-try-completion"
-  (flx-style-completion string table predicate point))
+  (flx-style-completion string table pred point))
 
 ;;;###autoload
-(defun flx-style-all-completions (string table predicate point)
+(defun flx-style-all-completions (string table pred point)
   "Fuzzy version of completion-all-completions"
-  (flx-style-completion string table predicate point 'all))
+  (flx-style-completion string table pred point 'all))
 
 ;;;###autoload
 (add-to-list 'completion-styles-alist
