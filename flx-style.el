@@ -45,12 +45,9 @@
               (lambda (strs)
                 (let ((hash-value (gethash strs commonality-cache nil)))
                   (if hash-value
-                      (if (eq hash-value 'nothing)
-                          nil
-                        hash-value)
-
+                      (if (eq hash-value 'nothing) nil hash-value)
                     (setq strs (mapcar #'string-to-list strs))
-                    (let ((res) (tried) (idx))
+                    (let (res tried idx)
                       (dolist (char (car strs))
                         (unless (memq char tried)
                           (catch 'notfound
@@ -72,19 +69,15 @@
                                        (if (> (length a) (length b)) a b))
                                      res)
                                   nil))
-                      (puthash strs
-                               (if res res 'nothing)
-                               commonality-cache)
+                      (puthash strs (or rest 'nothing) commonality-cache)
                       res))))))
     (concat (fuzzy-commonality strs))))
 
 (defun flx-style-find-holes (merged str)
   "Find positions in MERGED, where insertion by the user is likely, wrt. STR"
-  (let ((holes) (matches (cdr (flx-score str merged flx-style-cache))))
+  (let ((matches (cdr (flx-score str merged flx-style-cache))) holes)
     (dolist (i (number-sequence 0 (- (length matches) 2)))
-      (when (>
-             (elt matches (1+ i))
-             (1+ (elt matches i)))
+      (when (> (elt matches (1+ i)) (1+ (elt matches i)))
         (push (1+ i) holes)))
     (unless (<= (length str) (car (last matches)))
       (push (length merged) holes))
@@ -92,9 +85,8 @@
 
 (defun flx-style-merge (strs)
   "Merge a collection of strings, including their collective holes"
-  (let ((common (flx-style-commonality strs))
-        (holes))
-    (setq holes (make-vector (1+ (length common)) 0))
+  (let* ((common (flx-style-commonality strs))
+         (holes (make-vector (1+ (length common)) 0)))
     (dolist (str strs)
       (dolist (hole (flx-style-find-holes common str))
         (cl-incf (elt holes hole))))
