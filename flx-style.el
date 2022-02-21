@@ -55,7 +55,7 @@
                                    (throw 'notfound nil)))
                                 strs))
               (push (cons char
-                          (fuzzy-commonality
+                          (flx-style--commonality-hash
                            (cl-mapcar (lambda (str idx)
                                         (cl-subseq str (1+ idx)))
                                       strs idx)))
