@@ -4,11 +4,10 @@
 ;; Created date 2022-01-19 17:00:12
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
-;; Description: Completion style for flx
-;; Keyword: flx completion style
+;; URL: https://github.com/jcs-elpa/flx-style
 ;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24.3") (flx "0.5"))
-;; URL: https://github.com/jcs-elpa/flx-style
+;; Keywords: flx completion style
 
 ;; This file is NOT part of GNU Emacs.
 
