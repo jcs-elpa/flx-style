@@ -132,8 +132,8 @@
               (setq x (copy-sequence x))
               (let* ((score
                       (if (fboundp 'flx-rs-score)
-                          (flx-rs-score x string)
-                        (flx-score x string flx-strings-cache))))
+                          (flx-rs-score x infix)
+                        (flx-score x infix flx-strings-cache))))
                 (put-text-property 0 1 'completion-score
                                    (car score)
                                    x)
