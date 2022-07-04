@@ -3,7 +3,7 @@
          "Completion style for flx")
 
 (website-url "https://github.com/jcs-elpa/flx-style")
-(keywords "flx" "completion" "style")
+(keywords "matching" "flx" "completion" "style")
 
 (package-file "flx-style.el")
 
