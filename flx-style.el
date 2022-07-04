@@ -7,7 +7,7 @@
 ;; URL: https://github.com/jcs-elpa/flx-style
 ;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24.3") (flx "0.5"))
-;; Keywords: flx completion style
+;; Keywords: matching flx completion style
 
 ;; This file is NOT part of GNU Emacs.
 
