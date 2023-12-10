@@ -123,46 +123,47 @@
          (all (or (all-completions prefix table pred)
                   ;;(all-completions infix table pred)  ; TODO: Do we need this?
                   )))
-    (if all-p
-        ;; Implement completion-all-completions interface
-        (when all
-          (nconc
-           (mapcar
-            (lambda (x)
-              (setq x (copy-sequence x))
-              (let* ((score
-                      (if (fboundp 'flx-rs-score)
-                          (flx-rs-score x infix)
-                        (flx-score x infix flx-strings-cache))))
-                (put-text-property 0 1 'completion-score
-                                   (car score)
-                                   x)
-                (setq x (flx-propertize x score)))
-              x)
-            all)
-           (length prefix)))
-      ;; Implement completion-try-completions interface
-      (if (= (length all) 1)
-          (if (equal infix (car all))
-              t
-            ;; Avoid quirk of double / for filename completion. I don't
-            ;; know how this is *supposed* to be handled.
-            (when (and (> (length (car all)) 0)
-                       (> (length suffix) 0)
-                       (char-equal (aref (car all)
-                                         (1- (length (car all))))
-                                   (aref suffix 0)))
-              (setq suffix (substring suffix 1)))
-            (cons (concat prefix (car all) suffix)
-                  (length (concat prefix (car all)))))
-        (if (= (length infix) 0)
-            (cons string point)
-          (cl-destructuring-bind (merged . holes)
-              (flx-style-merge all)
-            (cons
-             (concat prefix merged suffix)
-             (+ (length prefix)
-                (cl-position (apply #'max holes) holes)))))))))
+    (cond (all-p
+           ;; Implement completion-all-completions interface
+           (when all
+             (nconc
+              (mapcar
+               (lambda (x)
+                 (setq x (copy-sequence x))
+                 (when-let
+                     ((score (if (fboundp 'flx-rs-score)
+                                 (flx-rs-score x infix)
+                               (flx-score x infix flx-strings-cache))))
+                   (put-text-property 0 1 'completion-score
+                                      (car score)
+                                      x)
+                   (setq x (flx-propertize x score)))
+                 x)
+               all)
+              (length prefix))))
+          (t
+           ;; Implement completion-try-completions interface
+           (if (= (length all) 1)
+               (if (equal infix (car all))
+                   t
+                 ;; Avoid quirk of double / for filename completion. I don't
+                 ;; know how this is *supposed* to be handled.
+                 (when (and (> (length (car all)) 0)
+                            (> (length suffix) 0)
+                            (char-equal (aref (car all)
+                                              (1- (length (car all))))
+                                        (aref suffix 0)))
+                   (setq suffix (substring suffix 1)))
+                 (cons (concat prefix (car all) suffix)
+                       (length (concat prefix (car all)))))
+             (if (= (length infix) 0)
+                 (cons string point)
+               (cl-destructuring-bind (merged . holes)
+                   (flx-style-merge all)
+                 (cons
+                  (concat prefix merged suffix)
+                  (+ (length prefix)
+                     (cl-position (apply #'max holes) holes))))))))))
 
 ;;;###autoload
 (defun flx-style-try-completion (string table pred point)
