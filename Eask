@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "flx-style"
          "0.1.1"
          "Completion style for flx")
