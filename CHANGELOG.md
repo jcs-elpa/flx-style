@@ -8,9 +8,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## 0.1.1 (Unreleased)
 > Released N/A
 
-* Fix some naming conventions (bbf890ab73c9e993d1b90e5a3b3b311e63a51743)
-* Extract symbol function using macro `cl-letf` (ec66c4d3f552a727640819cabb80efbd9dfcf47a)
-* Add highlighting (#1)
+* Fix some naming conventions ([`bbf890a`](../../commit/bbf890ab73c9e993d1b90e5a3b3b311e63a51743))
+* Extract symbol function using macro `cl-letf` ([`ec66c4d`](../../commit/ec66c4d3f552a727640819cabb80efbd9dfcf47a))
+* Add highlighting ([#1](../../pull/1))
 
 ## 0.1.0
 > Released Feb 22, 2022
